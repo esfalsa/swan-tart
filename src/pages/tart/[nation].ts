@@ -77,11 +77,20 @@ export const get: APIRoute = async function get({ params }) {
   }
 
   // if nation is not a WA member, return all WA member nations
-  if (!(params.nation in memberNations)) {
-    return { body: JSON.stringify(Object.keys(memberNations)) };
+  if (!memberNations.has(params.nation)) {
+    return { body: JSON.stringify([...memberNations.keys()]) };
   }
 
   const nations: string[] = [];
+
+  memberNations.forEach((endorsements, nation) => {
+    // TypeScript thinks params.nation has type string | undefined for some reason
+    // despite if (!params.nation) check at start of function
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    if (!endorsements.includes(params.nation!)) {
+      nations.push(nation);
+    }
+  });
 
   for (const nation in memberNations) {
     if (!memberNations.get(nation)?.includes(params.nation)) {

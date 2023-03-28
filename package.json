@@ -8,12 +8,14 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "publish": "wrangler pages publish ./dist",
     "format": "prettier --write --plugin-search-dir=. .",
     "lint": "eslint ."
   },
   "dependencies": {
     "astro": "^2.1.7",
-    "saxes": "^6.0.0"
+    "saxes": "^6.0.0",
+    "wrangler": "^2.13.0"
   },
   "devDependencies": {
     "@types/node": "^18.15.10",
